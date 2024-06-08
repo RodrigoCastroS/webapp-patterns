@@ -35,13 +35,20 @@ const Router = {
                 break;   
         }
         if (pageElement) {
-            // get current page element            
-            let currentPage = document.querySelector("main").firstElementChild; 
-            if (currentPage) {
-                currentPage.remove();
-                document.querySelector("main").appendChild(pageElement);
+            // get current page element     
+            function changePage() {
+                let currentPage = document.querySelector("main").firstElementChild; 
+                if (currentPage) {
+                    currentPage.remove();
+                    document.querySelector("main").appendChild(pageElement);
+                } else {
+                    document.querySelector("main").appendChild(pageElement);
+                }
+            }
+            if (!document.startViewTransition) {
+                changePage()
             } else {
-                document.querySelector("main").appendChild(pageElement);
+                document.startViewTransition(() => changePage())
             }
 
         }
